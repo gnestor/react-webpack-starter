@@ -1,0 +1,51 @@
+{
+  "name": "react-webpack-starter",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot --progress --colors",
+    "bundle": "webpack --config webpack.config.production.js",
+    "lint": "eslint .",
+    "test": "mocha --compilers js:babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnestor/react-webpack-starter.git"
+  },
+  "keywords": [
+    "react",
+    "es6",
+    "babel",
+    "webpack"
+  ],
+  "author": "Grant Nestor (grantnestor@gmail.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/gnestor/react-webpack-starter.git",
+  "dependencies": {
+    "babel-runtime": "^5",
+    "es6-promise": ">=3.0.2",
+    "react": ">=0.14.0",
+    "react-dom": ">=0.14.0",
+    "whatwg-fetch": ">=0.10.1"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": ">=3.1.0",
+    "babel-core": "^5",
+    "babel-eslint": ">=3.1.6",
+    "babel-loader": "^5",
+    "babel-plugin-react-transform": "^1.1",
+    "css-loader": ">=0.20.2",
+    "eslint": ">=0.21.2",
+    "eslint-plugin-react": ">=2.3.0",
+    "exports-loader": ">=0.6.2",
+    "imports-loader": ">=0.6.5",
+    "json-loader": ">=0.5.3",
+    "mocha": ">=2.3.3",
+    "react-transform-hmr": "^1.0.1",
+    "should-promised": ">=0.3.1",
+    "style-loader": ">=0.13.0",
+    "webpack": ">=1.12.2",
+    "webpack-dev-server": ">=1.8.0"
+  }
+}

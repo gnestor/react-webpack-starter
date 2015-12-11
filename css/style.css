@@ -1,0 +1,17 @@
+body {
+  background: #EFEFEF;
+}
+#helloWorld {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#helloWorld #input, #helloWorld #display {
+  padding: 30px;
+  font-size: 30px;
+  text-align: center;
+}
