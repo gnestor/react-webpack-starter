@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import Rebase from 're-base';
+
+const base = Rebase.createClass('https://react-in-a-day.firebaseio.com/');
 
 export default class App extends Component {
 
@@ -6,7 +9,8 @@ export default class App extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      message: 'Hello world'
+      messages: [],
+      input: 'test'
     };
   }
 
@@ -15,7 +19,11 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
+    base.syncState(`chatList`, {
+      context: this,
+      state: 'messages',
+      asArray: true
+    });
   }
 
   componentWillReceiveProps(nextProps) {
