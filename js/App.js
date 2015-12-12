@@ -1,45 +1,43 @@
-import React, {Component} from 'react';
+var React = require('react');
 
-export default class App extends Component {
+var App = React.createClass({
 
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
+  getInitialState() {
+    return {
       message: 'Hello world'
     };
-  }
+  },
 
-  componentWillMount() {
+  componentWillMount: function() {
     console.log('componentWillMount');
-  }
+  },
 
-  componentDidMount() {
+  componentDidMount: function() {
     console.log('componentDidMount');
-  }
+  },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function(nextProps) {
     console.log('componentWillReceiveProps', nextProps);
-  }
+  },
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate: function(nextProps, nextState) {
     console.log('shouldComponentUpdate', nextProps, nextState);
     return true;
-  }
+  },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate: function(nextProps, nextState) {
     console.log('componentWillUpdate', nextProps, nextState);
-  }
+  },
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate: function(prevProps, prevState) {
     console.log('componentDidUpdate', prevProps, prevState);
-  }
+  },
 
-  componentWillUnmount() {
+  componentWillUnmount: function() {
     console.log('componentWillUnmount');
-  }
+  },
 
-  render() {
+  render: function() {
     return (
       <div id="helloWorld">
         <input
@@ -52,10 +50,10 @@ export default class App extends Component {
       <div id="display" style={{color: 'grey', fontSize: 35}}>{this.state.message}</div>
       </div>
     );
-  }
+  },
 
-  handleChange(event) {
+  handleChange: function(event) {
     this.setState({message: event.target.value});
   }
 
-}
+});
