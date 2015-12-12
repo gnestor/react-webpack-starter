@@ -1,17 +1,39 @@
+html {
+  box-sizing: border-box;
+  font-size: 17px;
+  -webkit-tap-highlight-color: transparent;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 body {
   background: #EFEFEF;
+  margin: 0;
 }
-#helloWorld {
-  width: 100vw;
-  height: 100vh;
+.container {
+  /*width: 100vw;
+  height: 100vh;*/
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-#helloWorld #input, #helloWorld #display {
-  padding: 30px;
+#list {
+  width: 100%;
+  flex: 1;
+  list-style: none;
+  padding: 15px;
+  padding-bottom: 80px;
+  margin: 0;
+}
+#list .item {
+  padding-bottom: 15px;
+}
+#input {
+  width: 100%;
+  height: 80px;
+  position: fixed;
+  bottom: 0;
   font-size: 30px;
-  text-align: center;
+  padding: 0 30px;
 }

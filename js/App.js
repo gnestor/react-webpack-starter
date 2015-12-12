@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import Rebase from 're-base';
 
 const base = Rebase.createClass('https://react-in-a-day.firebaseio.com/');
@@ -8,14 +9,12 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.shouldScrollBottom = false;
     this.state = {
       messages: [],
       input: 'test'
     };
-  }
-
-  componentWillMount() {
-    console.log('componentWillMount');
   }
 
   componentDidMount() {
@@ -26,44 +25,47 @@ export default class App extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps', nextProps);
+  componentWillUpdate() {
+    // let node = ReactDOM.findDOMNode(this);
+    this.shouldScrollBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('shouldComponentUpdate', nextProps, nextState);
-    return true;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    console.log('componentWillUpdate', nextProps, nextState);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate', prevProps, prevState);
-  }
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
+  componentDidUpdate() {
+    if (this.shouldScrollBottom) document.body.scrollTop = document.body.scrollHeight;
   }
 
   render() {
+    let messages = this.state.messages.map((message, index) => (
+      <li className="item" key={index}>{message}</li>
+    ));
     return (
-      <div id="helloWorld">
+      <div className="container">
+        <ul id="list">
+          {messages}
+        </ul>
         <input
           id="input"
-          name="message"
           type="text"
+          value={this.state.input}
           onChange={this.handleChange}
-          value={this.state.message}
+          onKeyDown={this.handleKeyDown}
         />
-      <div id="display" style={{color: 'grey', fontSize: 35}}>{this.state.message}</div>
       </div>
     );
   }
 
   handleChange(event) {
-    this.setState({message: event.target.value});
+    this.setState({input: event.target.value});
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.setState({
+        messages: this.state.messages.concat(this.state.input),
+        input: ''
+      });
+    }
   }
 
 }
