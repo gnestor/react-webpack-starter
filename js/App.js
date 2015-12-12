@@ -61,10 +61,12 @@ export default class App extends Component {
   handleKeyDown(event) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      this.setState({
-        messages: this.state.messages.concat(this.state.input),
-        input: ''
-      });
+      if (this.state.input !== '') {
+        this.setState({
+          messages: this.state.messages.concat(this.state.input),
+          input: ''
+        });
+      }
     }
   }
 
