@@ -29,6 +29,12 @@ body {
 #list .item {
   padding-bottom: 15px;
 }
+#list .item .name {
+  font-weight: 700;
+}
+#list .item .time {
+  float: right;
+}
 #input {
   width: 100%;
   height: 80px;

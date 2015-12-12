@@ -13,7 +13,8 @@ export default class App extends Component {
     this.shouldScrollBottom = false;
     this.state = {
       messages: [],
-      input: 'test'
+      input: '',
+      name: ''
     };
   }
 
@@ -23,6 +24,8 @@ export default class App extends Component {
       state: 'messages',
       asArray: true
     });
+    let name = prompt('What\'s your name');
+    this.setState({name});
   }
 
   componentWillUpdate() {
@@ -36,7 +39,11 @@ export default class App extends Component {
 
   render() {
     let messages = this.state.messages.map((message, index) => (
-      <li className="item" key={index}>{message}</li>
+      <li className="item" key={index}>
+        <span className="name">{message.name}: </span>
+        <span className="message">{message.message}</span>
+        <span className="time">{message.time}</span>
+      </li>
     ));
     return (
       <div className="container">
@@ -62,8 +69,13 @@ export default class App extends Component {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (this.state.input !== '') {
+        let time = new Date();
         this.setState({
-          messages: this.state.messages.concat(this.state.input),
+          messages: this.state.messages.concat({
+            name: this.state.name,
+            message: this.state.input,
+            time: `${time.getHours()}:${time.getMinutes()}`
+          }),
           input: ''
         });
       }
