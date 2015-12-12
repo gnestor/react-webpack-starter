@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Rebase from 're-base';
+import Message from './Message';
 
 const base = Rebase.createClass('https://react-in-a-day.firebaseio.com/');
 
@@ -39,11 +40,7 @@ export default class App extends Component {
 
   render() {
     let messages = this.state.messages.map((message, index) => (
-      <li className="item" key={index}>
-        <span className="name">{message.name}: </span>
-        <span className="message">{message.message}</span>
-        <span className="time">{message.time}</span>
-      </li>
+      <Message key={index} {...message} />
     ));
     return (
       <div className="container">
