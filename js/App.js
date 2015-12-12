@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Rebase from 're-base';
 import Message from './Message';
 
@@ -45,7 +46,13 @@ export default class App extends Component {
     return (
       <div className="container">
         <ul id="list">
-          {messages}
+          <ReactCSSTransitionGroup
+            transitionName="item"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+          >
+            {messages}
+          </ReactCSSTransitionGroup>
         </ul>
         <input
           id="input"
