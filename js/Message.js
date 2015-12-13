@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Highlight from 'react-highlight';
+import '../css/github-gist.css';
 
 export default class Message extends Component {
 
@@ -32,30 +34,28 @@ export default class Message extends Component {
   }
 
   transform(message) {
-    let transformed = message;
     switch (true) {
-      // case /\.jpg|png|gif$/.test(message):
-      //   transformed = message.split(' ').map(word => {
-      //     if (word.match(/\.jpg|png|gif$/)) return <img src={word} width={300} />;
-      //     return word + ' ';
-      //   });
-      //   break;
       case /https?\:\/\//.test(message):
         if (/\.jpg|png|gif$/.test(message)) {
-          transformed = message.split(' ').map(word => {
+          return message.split(' ').map(word => {
             if (word.match(/\.jpg|png|gif$/)) return <img src={word} width={300} />;
             return word + ' ';
           });
         } else {
-          transformed = message.split(' ').map(word => {
+          return message.split(' ').map(word => {
             if (word.match(/https?\:\/\//g)) return <a href={word}>{word} </a>;
             return word + ' ';
           });
         }
         break;
-
+      case /^\`.*\`$/.test(message):
+        return (<Highlight className='javascript'>
+          {message.replace(/\`/g, '')}
+        </Highlight>);
+        break;
+      default:
+        return message;
     }
-    return transformed;
   }
 
 }
