@@ -12,6 +12,7 @@ export default class App extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     this.shouldScrollBottom = false;
     this.state = {
       messages: [],
@@ -41,7 +42,12 @@ export default class App extends Component {
 
   render() {
     let messages = this.state.messages.map((message, index) => (
-      <Message key={index} {...message} />
+      <Message
+        key={index}
+        message={message}
+        name={this.state.name}
+        handleRemove={this.handleRemove}
+      />
     ));
     return (
       <div className="container">
@@ -84,6 +90,12 @@ export default class App extends Component {
         });
       }
     }
+  }
+
+  handleRemove(key) {
+    this.setState({
+      messages: this.state.messages.filter(message => message.key !== key)
+    });
   }
 
 }

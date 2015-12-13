@@ -7,10 +7,7 @@ export default class Message extends Component {
   constructor(props) {
     super(props);
     this.transform = this.transform.bind(this);
-  }
-
-  componentDidMount() {
-
+    this.onRemove = this.onRemove.bind(this);
   }
 
   render() {
@@ -18,8 +15,11 @@ export default class Message extends Component {
       name,
       message,
       time
-    } = this.props;
+    } = this.props.message;
+    let me = this.props.name;
+    let remove;
     message = this.transform(message);
+    if (name === me) remove = <span className="remove" onClick={this.onRemove}>✖</span>
     return (
       <li className="item">
         <div>
@@ -28,9 +28,14 @@ export default class Message extends Component {
         </div>
         <div>
           <span className="time">{time}</span>
+          {remove}
         </div>
       </li>
     );
+  }
+
+  onRemove(event) {
+    this.props.handleRemove(this.props.message.key);
   }
 
   transform(message) {

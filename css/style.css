@@ -39,7 +39,6 @@ body {
   margin: 1px;
 }
 #list .item .name {
-  width: 150px;
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -47,6 +46,14 @@ body {
 }
 #list .item .time {
   color: silver;
+}
+#list .item .remove {
+  color: silver;
+  cursor: pointer;
+  padding-left: 10px;
+}
+#list .item .delete:hover {
+  color: red;
 }
 .item-enter {
   opacity: 0.01;
