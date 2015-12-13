@@ -8,6 +8,8 @@ html {
 }
 body {
   background: #EFEFEF;
+  font-family: 'HelveticaNeue', Helvetica, sans-serif;
+  font-size: 17px;
   margin: 0;
 }
 .container {
@@ -23,17 +25,28 @@ body {
   flex: 1;
   list-style: none;
   padding: 15px;
-  padding-bottom: 80px;
+  padding-bottom: 95px;
   margin: 0;
 }
 #list .item {
-  padding-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  background-color: white;
+  border: solid 1px #ebebeb;
+  padding: 15px;
+  margin: 1px;
 }
 #list .item .name {
+  width: 150px;
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #list .item .time {
-  float: right;
+  color: silver;
 }
 .item-enter {
   opacity: 0.01;

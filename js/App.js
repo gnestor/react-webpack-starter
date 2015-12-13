@@ -57,6 +57,7 @@ export default class App extends Component {
         <input
           id="input"
           type="text"
+          placeholder="Say something..."
           value={this.state.input}
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
@@ -71,7 +72,6 @@ export default class App extends Component {
 
   handleKeyDown(event) {
     if (event.key === 'Enter') {
-      event.preventDefault();
       if (this.state.input !== '') {
         let time = new Date();
         this.setState({
