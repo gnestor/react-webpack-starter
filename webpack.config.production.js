@@ -89,7 +89,7 @@ module.exports = {
         include: path.join(__dirname, 'js')
       },
       {
-        test: /style\.css$/,
+        test: /.css$/,
         loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions',
         include: path.join(__dirname, 'css'),
       }

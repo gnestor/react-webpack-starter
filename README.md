@@ -12,6 +12,7 @@ This project is a boilerplate for using:
 * Install: `npm install`
 * Run dev server: `npm start` (http://localhost:8080)
 * Create production bundle: `npm run bundle`
+* Deploy to Firebase: `npm run deploy`
 
 ### Project Structure
 
