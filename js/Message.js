@@ -42,14 +42,14 @@ export default class Message extends Component {
     switch (true) {
       case /https?\:\/\//.test(message):
         if (/\.jpg|png|gif$/.test(message)) {
-          return message.split(' ').map(word => {
-            if (word.match(/\.jpg|png|gif$/)) return <img src={word} width={300} />;
-            return word + ' ';
+          return message.split(' ').map((word, index) => {
+            if (word.match(/\.jpg|png|gif$/)) return <img key={index} src={word} width={300} />;
+            return <span key={index}>word + ' '</span>;
           });
         } else {
-          return message.split(' ').map(word => {
-            if (word.match(/https?\:\/\//g)) return <a href={word}>{word} </a>;
-            return word + ' ';
+          return message.split(' ').map((word, index) => {
+            if (word.match(/https?\:\/\//g)) return <a key={index} href={word}>{word} </a>;
+            return <span key={index}>word + ' '</span>;
           });
         }
         break;
