@@ -68,7 +68,7 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': '"production"'
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
@@ -90,7 +90,11 @@ module.exports = {
       },
       {
         test: /.css$/,
-        loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions',
+        loaders: [
+          'style',
+          'css?sourceMap',
+          'autoprefixer-loader?browsers=last 2 versions'
+        ],
         include: path.join(__dirname, 'css'),
       }
     ]

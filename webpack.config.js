@@ -90,7 +90,6 @@ module.exports = {
           'css?sourceMap',
           'autoprefixer-loader?browsers=last 2 versions'
         ],
-        // loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions',
         include: path.join(__dirname, 'css'),
       }
     ]
