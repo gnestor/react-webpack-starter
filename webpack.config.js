@@ -49,7 +49,7 @@ var path = require('path');
 module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
+    'babel-polyfill',
     './js/index'
   ],
   output: {
@@ -65,7 +65,7 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('development')
+        'NODE_ENV': '"development"'
       }
     }),
     new webpack.ProvidePlugin({
@@ -79,22 +79,18 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel',
         include: path.join(__dirname, 'js'),
-        query: JSON.stringify({
-          'plugins': ['react-transform'],
-          'extra': {
-            'react-transform': {
-              'transforms': [{
-                'transform': 'react-transform-hmr',
-                'imports': ['react'],
-                'locals': ['module']
-              }]
-            }
-          }
-        })
+        query: {
+          cacheDirectory: true
+        }
       },
       {
         test: /.css$/,
-        loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions',
+        loaders: [
+          'style',
+          'css?sourceMap',
+          'autoprefixer-loader?browsers=last 2 versions'
+        ],
+        // loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions',
         include: path.join(__dirname, 'css'),
       }
     ]
