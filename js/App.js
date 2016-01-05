@@ -1,61 +1,101 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import Rebase from 're-base';
+import Message from './Message';
+
+const base = Rebase.createClass('https://react-in-a-day.firebaseio.com/');
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
+    this.shouldScrollBottom = false;
     this.state = {
-      message: 'Hello world'
+      messages: [],
+      input: '',
+      name: ''
     };
   }
 
-  componentWillMount() {
-    console.log('componentWillMount');
-  }
-
   componentDidMount() {
-    console.log('componentDidMount');
+    base.syncState(`chatList`, {
+      context: this,
+      state: 'messages',
+      asArray: true
+    });
+    let name = prompt('What\'s your name');
+    this.setState({name});
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps', nextProps);
+  componentWillUpdate() {
+    // let node = ReactDOM.findDOMNode(this);
+    this.shouldScrollBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('shouldComponentUpdate', nextProps, nextState);
-    return true;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    console.log('componentWillUpdate', nextProps, nextState);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate', prevProps, prevState);
-  }
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
+  componentDidUpdate() {
+    if (this.shouldScrollBottom) document.body.scrollTop = document.body.scrollHeight;
   }
 
   render() {
+    let messages = this.state.messages.map((message, index) => (
+      <Message
+        key={index}
+        message={message}
+        name={this.state.name}
+        handleRemove={this.handleRemove}
+      />
+    ));
     return (
-      <div id="helloWorld">
+      <div className="container">
+        <ul id="list">
+          <ReactCSSTransitionGroup
+            transitionName="item"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+          >
+            {messages}
+          </ReactCSSTransitionGroup>
+        </ul>
         <input
           id="input"
-          name="message"
           type="text"
+          placeholder="Say something..."
+          value={this.state.input}
           onChange={this.handleChange}
-          value={this.state.message}
+          onKeyDown={this.handleKeyDown}
         />
-      <div id="display" style={{color: 'grey', fontSize: 35}}>{this.state.message}</div>
       </div>
     );
   }
 
   handleChange(event) {
-    this.setState({message: event.target.value});
+    this.setState({input: event.target.value});
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      if (this.state.input !== '') {
+        let time = new Date();
+        this.setState({
+          messages: this.state.messages.concat({
+            name: this.state.name,
+            message: this.state.input,
+            time: `${time.getHours()}:${time.getMinutes()}`
+          }),
+          input: ''
+        });
+      }
+    }
+  }
+
+  handleRemove(key) {
+    this.setState({
+      messages: this.state.messages.filter(message => message.key !== key)
+    });
   }
 
 }
