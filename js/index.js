@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Store from './Store';
+import Messages from './Messages';
 import '../css/style.css';
 
 ReactDOM.render((
-  <App />
+  <Store>
+    <Messages />
+  </Store>
 ), document.getElementById('app'));
