@@ -28,9 +28,9 @@ export default class Messages extends Component {
   }
 
   render() {
-    let messages = this.context.state.messages.map((message, index) => (
+    let messages = this.context.state.messages.map(message => (
       <Message
-        key={index}
+        key={message.time}
         message={message}
         name={this.context.state.name}
         handleRemove={this.handleRemove}
@@ -67,8 +67,8 @@ export default class Messages extends Component {
     if (event.key === 'Enter' && this.context.state.input !== '') this.context.dispatch('sendMessage')
   }
 
-  handleRemove(key) {
-    this.context.dispatch('removeMessage', key)
+  handleRemove(message) {
+    this.context.dispatch('removeMessage', message.time)
   }
 
 }

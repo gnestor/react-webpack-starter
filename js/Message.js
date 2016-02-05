@@ -13,12 +13,13 @@ export default class Message extends Component {
   render() {
     let {
       name,
-      message,
+      text,
       time
     } = this.props.message
     let me = this.props.name
+    let timestamp = new Date(JSON.parse(time))
     let remove
-    message = this.transform(message)
+    let message = this.transform(text)
     if (name === me) remove = <span className="remove" onClick={this.onRemove}>✖</span>
     return (
       <li className="item">
@@ -27,7 +28,7 @@ export default class Message extends Component {
           <span className="message">{message}</span>
         </div>
         <div>
-          <span className="time">{time}</span>
+          <span className="time">{`${timestamp.getHours()}:${timestamp.getMinutes()}`}</span>
           {remove}
         </div>
       </li>
@@ -35,7 +36,7 @@ export default class Message extends Component {
   }
 
   onRemove(event) {
-    this.props.handleRemove(this.props.message.key)
+    this.props.handleRemove(this.props.message)
   }
 
   transform(message) {
