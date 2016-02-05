@@ -39,13 +39,12 @@ export default class Store extends Component {
   componentDidMount() {
     // Listen for left/right arrow key keydowns
     document.body.addEventListener('keydown', this.handleKeyDown)
-    // Log initial state to state history
-    this.log({action: 'mount'})
     // Fetch state from Firebase
     base.syncState(`chatList`, {
       context: this,
       state: 'messages',
-      asArray: true
+      asArray: true,
+      then: () => this.log({action: 'sync'})
     })
     // Set user name
     let name = prompt('What\'s your name')
@@ -90,16 +89,19 @@ export default class Store extends Component {
 
   // Log a new action and state snapshot to the state history
   log(data = {}) {
-    this.setState({history: this.state.history + 1}, (previousState, currentProps) => {
-      this.history = this.history.concat({
-        ...data,
-        state: this.state,
-        timestamp: Date.now()
+    // Logging every setInput state change caused performance issues very quickly
+    if (this.action !== 'setInput') {
+      this.setState({history: this.state.history + 1}, (previousState, currentProps) => {
+        this.history = this.history.concat({
+          ...data,
+          state: this.state,
+          timestamp: Date.now()
+        })
+        console.group(data)
+        console.log(this.state)
+        console.groupEnd()
       })
-      console.group(data)
-      console.log(this.state)
-      console.groupEnd()
-    })
+    }
   }
 
   // Set the current state with a index from the state history
