@@ -54,7 +54,10 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-  entry: './js/index',
+  entry: [
+    'babel-polyfill',
+    './js/index'
+  ],
   output: {
     path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
@@ -66,11 +69,6 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -89,8 +87,12 @@ module.exports = {
         include: path.join(__dirname, 'js')
       },
       {
-        test: /style\.css$/,
-        loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions',
+        test: /.css$/,
+        loaders: [
+          'style',
+          'css?sourceMap',
+          'autoprefixer-loader?browsers=last 2 versions'
+        ],
         include: path.join(__dirname, 'css'),
       }
     ]

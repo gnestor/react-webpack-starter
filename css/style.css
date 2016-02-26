@@ -1,7 +1,8 @@
 body {
   background: #EFEFEF;
+  font-family: -apple-system, Helvetica, Arial, sans-serif;
 }
-#helloWorld {
+.container {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -10,8 +11,12 @@ body {
   justify-content: center;
   align-items: center;
 }
-#helloWorld #input, #helloWorld #display {
+.display {
   padding: 30px;
   font-size: 30px;
+  text-align: center;
+}
+.input {
+  font-size: 35px;
   text-align: center;
 }
