@@ -41,15 +41,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div id="helloWorld">
+      <div className="container">
+        <div className="display" style={{
+            color: 'grey',
+            fontSize: 35
+          }}>{this.state.message}</div>
         <input
-          id="input"
-          name="message"
+          className="input"
           type="text"
           onChange={this.handleChange}
           value={this.state.message}
         />
-      <div id="display" style={{color: 'grey', fontSize: 35}}>{this.state.message}</div>
       </div>
     );
   }
