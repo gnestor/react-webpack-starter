@@ -13,12 +13,13 @@ export default class Message extends Component {
   render() {
     let {
       name,
-      message,
+      text,
       time
-    } = this.props.message;
-    let me = this.props.name;
-    let remove;
-    message = this.transform(message);
+    } = this.props.message
+    let message = this.transform(text)
+    let me = this.props.name
+    let timestamp = new Date(JSON.parse(time))
+    let remove
     if (name === me) remove = <span className="remove" onClick={this.onRemove}>✖</span>
     return (
       <li className="item">
@@ -27,11 +28,11 @@ export default class Message extends Component {
           <span className="message">{message}</span>
         </div>
         <div>
-          <span className="time">{time}</span>
+          <span className="time">{`${timestamp.getHours()}:${timestamp.getMinutes()}`}</span>
           {remove}
         </div>
       </li>
-    );
+    )
   }
 
   onRemove(event) {
@@ -44,12 +45,12 @@ export default class Message extends Component {
         if (/\.jpg|png|gif$/.test(message)) {
           return message.split(' ').map((word, index) => {
             if (word.match(/\.jpg|png|gif$/)) return <img key={index} src={word} width={300} />;
-            return <span key={index}>word + ' '</span>;
+            return word + ' ';
           });
         } else {
           return message.split(' ').map((word, index) => {
             if (word.match(/https?\:\/\//g)) return <a key={index} href={word}>{word} </a>;
-            return <span key={index}>word + ' '</span>;
+            return word + ' ';
           });
         }
         break;

@@ -52,7 +52,7 @@ body {
   cursor: pointer;
   padding-left: 10px;
 }
-#list .item .delete:hover {
+#list .item .remove:hover {
   color: red;
 }
 .item-enter {

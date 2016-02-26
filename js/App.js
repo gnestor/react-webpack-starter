@@ -83,8 +83,8 @@ export default class App extends Component {
         this.setState({
           messages: this.state.messages.concat({
             name: this.state.name,
-            message: this.state.input,
-            time: `${time.getHours()}:${time.getMinutes()}`
+            text: this.state.input,
+            time: JSON.stringify(new Date())
           }),
           input: ''
         });
