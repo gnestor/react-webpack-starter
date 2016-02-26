@@ -65,7 +65,6 @@ export default class Store extends Component {
   render() {
     // This is a container component and doesn't render any UI itself
     return this.props.children
-    // return React.cloneElement(this.props.children, {onKeyDown: this.handleKeyDown})
   }
 
   /**
@@ -104,7 +103,7 @@ export default class Store extends Component {
     }
   }
 
-  // Set the current state with a index from the state history
+  // Set the current state with an index from the state history
   setHistory(index) {
     this.setState(this.history.find(item => item.state.history === index).state, (previousState, currentProps) => {
       console.group({

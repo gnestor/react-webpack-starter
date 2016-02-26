@@ -10,7 +10,7 @@ export default class Messages extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
-    this.shouldScrollBottom = false
+    this.shouldScrollBottom = true
   }
 
   // Enable React's context feature
