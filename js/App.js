@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Message from './Message'
+import Messages from './Messages';
 
 export default class App extends Component {
 
@@ -33,9 +33,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="container">
-        <ul className="messages">
-          {this.state.messages.map((message, index) => <Message key={index} message={message} />)}
-        </ul>
+        <Messages messages={this.state.messages} />
         <input
           className="input"
           type="text"
