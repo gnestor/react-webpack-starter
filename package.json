@@ -26,6 +26,7 @@
     "babel-polyfill": ">=6.3.14",
     "babel-runtime": ">=6.3.13",
     "es6-promise": ">=3.0.2",
+    "re-base": "^1.5.1",
     "react": ">=0.14.0",
     "react-dom": ">=0.14.0",
     "whatwg-fetch": ">=0.10.1"
@@ -44,6 +45,7 @@
     "eslint": ">=0.21.2",
     "eslint-plugin-react": ">=2.3.0",
     "exports-loader": ">=0.6.2",
+    "firebase-tools": "^2.2.1",
     "imports-loader": ">=0.6.5",
     "json-loader": ">=0.5.3",
     "mocha": ">=2.3.3",

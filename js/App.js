@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import Messages from './Messages';
+import Rebase from 're-base';
+
+const base = Rebase.createClass('https://react-in-a-day.firebaseio.com/');
 
 export default class App extends Component {
 
@@ -18,6 +21,11 @@ export default class App extends Component {
   componentDidMount() {
     let name = prompt('What\'s your name?');
     this.setState({name})
+    base.syncState(`messages`, {
+      context: this,
+      state: 'messages',
+      asArray: true
+    });
   }
 
   // If the user is scrolled to the bottom...
