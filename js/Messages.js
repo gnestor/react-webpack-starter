@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Rebase from 're-base'
 import Message from './Message'
+
+const base = Rebase.createClass('https://react-in-a-day.firebaseio.com/')
 
 export default class Messages extends Component {
 
@@ -10,13 +13,37 @@ export default class Messages extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
+    this.base = null
     this.shouldScrollBottom = true
   }
 
-  // Enable React's context feature
-  static contextTypes = {
-    state: React.PropTypes.object.isRequired,
-    dispatch: React.PropTypes.func.isRequired
+  componentDidMount() {
+    this.base = base.listenTo('messages', {
+      context: this,
+      asArray: true,
+      then: messages => {
+        this.props.dispatch({
+          type: 'SYNC_MESSAGES',
+          messages
+        })
+      }
+    })
+    let name = prompt('What\'s your name')
+    this.props.dispatch({
+      type: 'SET_NAME',
+      name
+    })
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.base)
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.messages.length > this.props.messages.length) {
+      base.post('messages', {data: nextProps.messages})
+    }
+    return true
   }
 
   componentWillUpdate() {
@@ -28,11 +55,11 @@ export default class Messages extends Component {
   }
 
   render() {
-    let messages = this.context.state.messages.map(message => (
+    let messages = this.props.messages.map(message => (
       <Message
         key={message.time}
         message={message}
-        name={this.context.state.name}
+        name={this.props.name}
         handleRemove={this.handleRemove}
       />
     ))
@@ -51,7 +78,7 @@ export default class Messages extends Component {
           id="input"
           type="text"
           placeholder="Say something..."
-          value={this.context.state.input}
+          value={this.props.input}
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
         />
@@ -60,15 +87,21 @@ export default class Messages extends Component {
   }
 
   handleChange(event) {
-    this.context.dispatch('setInput', event.target.value)
+    this.props.dispatch({
+      type: 'SET_INPUT',
+      input: event.target.value
+    })
   }
 
   handleKeyDown(event) {
-    if (event.key === 'Enter' && this.context.state.input !== '') this.context.dispatch('sendMessage')
+    if (event.key === 'Enter' && this.props.input !== '') this.props.dispatch({type: 'SEND_MESSAGE'})
   }
 
   handleRemove(message) {
-    this.context.dispatch('removeMessage', message.time)
+    this.props.dispatch({
+      type: 'REMOVE_MESSAGE',
+      message
+    })
   }
 
 }
