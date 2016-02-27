@@ -8,21 +8,45 @@ export default class App extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.state = {
       messages: [],
-      input: 'Hello world'
+      name: '',
+      input: ''
     };
+  }
+
+  // Capture user's name
+  componentDidMount() {
+    let name = prompt('What\'s your name?');
+    this.setState({name})
+  }
+
+  // If the user is scrolled to the bottom...
+  componentWillUpdate(nextProps, nextState) {
+    this.shouldScrollBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
+  }
+
+  // Scroll the messages list to the bottom
+  componentDidUpdate(prevProps, prevState) {
+    if (this.shouldScrollBottom) document.body.scrollTop = document.body.scrollHeight;
   }
 
   render() {
     return (
       <div className="container">
-        <ul>
+        <ul className="messages">
           {this.state.messages.map((message, index) => (
-            <li key={index}>{message}</li>
+            <li className="message" key={index}>
+              <div>
+                <span className="name">{`${message.name}: `}</span>
+                <span className="text">{message.text}</span>
+              </div>
+              <div className="time">{`${message.time.getHours()}:${message.time.getMinutes()}`}</div>
+            </li>
           ))}
         </ul>
         <input
           className="input"
           type="text"
+          placeholder="Say something..."
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           value={this.state.input}
@@ -37,7 +61,11 @@ export default class App extends Component {
 
   handleKeyDown(event) {
     if (event.key === 'Enter') {
-      let messages = [...this.state.messages, this.state.input];
+      let messages = [...this.state.messages, {
+        name: this.state.name,
+        text: this.state.input,
+        time: new Date()
+      }];
       this.setState({
         messages,
         input: ''

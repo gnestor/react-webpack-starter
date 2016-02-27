@@ -1,22 +1,49 @@
+html {
+  box-sizing: border-box;
+  font-size: 17px;
+  -webkit-tap-highlight-color: transparent;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 body {
   background: #EFEFEF;
   font-family: -apple-system, Helvetica, Arial, sans-serif;
+  margin: 0;
 }
 .container {
-  width: 100vw;
-  height: 100vh;
   display: flex;
   flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.display {
-  padding: 30px;
-  font-size: 30px;
-  text-align: center;
+.messages {
+  width: 100%;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 65px;
+}
+.messages .message {
+  background-color: white;
+  list-style: none;
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.messages .message .name {
+  font-weight: bold;
+}
+.messages .message .time {
+  color: silver;
 }
 .input {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   font-size: 35px;
-  text-align: center;
+  padding: 5px;
 }
