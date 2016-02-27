@@ -19,13 +19,13 @@ export default class App extends Component {
 
   // Capture user's name
   componentDidMount() {
-    let name = prompt('What\'s your name?');
-    this.setState({name})
     base.syncState(`messages`, {
       context: this,
       state: 'messages',
       asArray: true
     });
+    let name = prompt('What\'s your name?');
+    this.setState({name});
   }
 
   // If the user is scrolled to the bottom...
@@ -63,7 +63,7 @@ export default class App extends Component {
       let messages = [...this.state.messages, {
         name: this.state.name,
         text: this.state.input,
-        time: new Date()
+        time: JSON.stringify(new Date())
       }];
       this.setState({
         messages,
