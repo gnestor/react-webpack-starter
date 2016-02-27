@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Message from './Message'
 
 export default class Messages extends Component {
@@ -9,6 +9,14 @@ export default class Messages extends Component {
         {this.props.messages.map((message, index) => <Message key={index} {...message} />)}
       </ul>
     );
+  }
+
+  static propTypes = {
+    messages: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      text: PropTypes.string,
+      time: PropTypes.string
+    }))
   }
 
 }

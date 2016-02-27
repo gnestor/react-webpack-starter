@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
 export default class Message extends Component {
 
@@ -13,6 +13,12 @@ export default class Message extends Component {
         <div className="time">{`${time.getHours()}:${time.getMinutes()}`}</div>
       </li>
     );
+  }
+
+  static propTypes = {
+    name: PropTypes.string,
+    text: PropTypes.string,
+    time: PropTypes.string
   }
 
 }
