@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Message from './Message'
 
 export default class App extends Component {
 
@@ -33,15 +34,7 @@ export default class App extends Component {
     return (
       <div className="container">
         <ul className="messages">
-          {this.state.messages.map((message, index) => (
-            <li className="message" key={index}>
-              <div>
-                <span className="name">{`${message.name}: `}</span>
-                <span className="text">{message.text}</span>
-              </div>
-              <div className="time">{`${message.time.getHours()}:${message.time.getMinutes()}`}</div>
-            </li>
-          ))}
+          {this.state.messages.map((message, index) => <Message key={index} message={message} />)}
         </ul>
         <input
           className="input"
