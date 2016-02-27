@@ -5,59 +5,44 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.state = {
-      message: 'Hello world'
+      messages: [],
+      input: 'Hello world'
     };
-  }
-
-  componentWillMount() {
-    console.log('componentWillMount');
-  }
-
-  componentDidMount() {
-    console.log('componentDidMount');
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps', nextProps);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('shouldComponentUpdate', nextProps, nextState);
-    return true;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    console.log('componentWillUpdate', nextProps, nextState);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate', prevProps, prevState);
-  }
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
   }
 
   render() {
     return (
       <div className="container">
-        <div className="display" style={{
-            color: 'grey',
-            fontSize: 35
-          }}>{this.state.message}</div>
+        <ul>
+          {this.state.messages.map((message, index) => (
+            <li key={index}>{message}</li>
+          ))}
+        </ul>
         <input
           className="input"
           type="text"
           onChange={this.handleChange}
-          value={this.state.message}
+          onKeyDown={this.handleKeyDown}
+          value={this.state.input}
         />
       </div>
     );
   }
 
   handleChange(event) {
-    this.setState({message: event.target.value});
+    this.setState({input: event.target.value});
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      let messages = [...this.state.messages, this.state.input];
+      this.setState({
+        messages,
+        input: ''
+      });
+    }
   }
 
 }
