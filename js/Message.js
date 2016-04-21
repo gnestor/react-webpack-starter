@@ -53,12 +53,10 @@ export default class Message extends Component {
             return word + ' ';
           });
         }
-        break;
       case /^\`.*\`$/.test(message):
         return (<Highlight className='javascript'>
           {message.replace(/\`/g, '')}
         </Highlight>);
-        break;
       default:
         return message;
     }

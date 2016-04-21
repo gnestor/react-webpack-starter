@@ -1,7 +1,11 @@
 {
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
+  "parserOptions": {,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    }
   },
   "env": {
     "browser": true,
@@ -19,7 +23,7 @@
     "no-use-before-define": [2, "nofunc"],
     "react/display-name": 0,
     "react/jsx-boolean-value": [2, "always"],
-    "react/jsx-quotes": 2,
+    "react/jsx-quotes": 0,
     "react/jsx-no-undef": 2,
     "react/jsx-sort-props": 0,
     "react/jsx-uses-react": 2,

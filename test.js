@@ -1,30 +1,30 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
-import cheerio from 'cheerio';
-import should from 'should'
+import {mount, shallow} from 'enzyme'
+import expect, {
+  createSpy,
+  spyOn,
+  isSpy
+} from 'expect'
 import App from './js/App'
 import Message from './js/Message'
 
 describe('App', () => {
 
-  global.prompt = () => 'grant';
-  let spec = 'test';
-  let component = TestUtils.renderIntoDocument(<App />);
-  let inputElement = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
-  let inputNode = ReactDOM.findDOMNode(inputElement);
-  let ulElement = TestUtils.findRenderedDOMComponentWithTag(component, 'ul');
-  let ulNode = ReactDOM.findDOMNode(ulElement);
+  global.prompt = () => 'grant'
+  let spec = 'test'
+  let wrapper = mount(<App />)
 
   describe('handleChange', () => {
 
     it('should change the input value', () => {
-      TestUtils.Simulate.change(inputElement, {
+      wrapper.find('input').simulate('change', {
         target: {
           value: spec
         }
-      });
-      should(inputNode.value).equal(spec);
+      })
+      expect(wrapper.find('input').props().value).toEqual(spec)
     })
 
   })
@@ -32,18 +32,16 @@ describe('App', () => {
   describe('handleKeyDown', () => {
 
     it('should clear the input value', () => {
-      TestUtils.Simulate.keyDown(inputElement, {
+      wrapper.find('input').simulate('keyDown', {
         key: 'Enter',
         keyCode: 13,
         which: 13
-      });
-      should(inputNode.value).equal('');
+      })
+      expect(wrapper.find('input').props().value).toEqual('')
     })
 
     it('should add message to message list', () => {
-      let messages = ulNode.querySelectorAll('.message');
-      let message = messages[messages.length - 1];
-      should(message.textContent).equal(spec);
+      expect(wrapper.find('.message').last().text()).toEqual(spec)
     })
 
   })
@@ -55,105 +53,72 @@ describe('Message', function () {
   it('should display plain text', () => {
     const spec = {
       name: 'grant',
-      message: 'test',
-      time: '1:23'
-    };
-    let component = TestUtils.renderIntoDocument(
-      <Message
-        key={1}
-        message={spec}
-        name='grant'
-      />
-    );
-    let element = TestUtils.findRenderedDOMComponentWithClass(
-      component,
-      'message'
-    );
-    let node = ReactDOM.findDOMNode(element);
-    should(node.textContent).equal(spec.message);
+      text: 'test',
+      time: JSON.stringify(new Date())
+    }
+    let wrapper = shallow(<Message
+      key={1}
+      message={spec}
+      name='grant'
+    />)
+    expect(wrapper.find('.message').text()).toEqual(spec.text)
   })
 
   it('should display URL', () => {
     const spec = {
       name: 'grant',
-      message: 'https://github.com/gnestor/react-webpack-starter',
-      time: '1:23'
-    };
-    let component = TestUtils.renderIntoDocument(
-      <Message
-        key={1}
-        message={spec}
-        name='grant'
-      />
-    );
-    let element = TestUtils.findRenderedDOMComponentWithClass(
-      component,
-      'message'
-    );
-    let node = ReactDOM.findDOMNode(element);
-    should(node.querySelector('a')).not.equal(null);
+      text: 'https://github.com/gnestor/react-webpack-starter',
+      time: JSON.stringify(new Date())
+    }
+    let wrapper = shallow(<Message
+      key={1}
+      message={spec}
+      name='grant'
+    />)
+    expect(wrapper.find('a').props().href).toEqual(spec.text)
   })
 
   it('should display image', () => {
     const spec = {
       name: 'grant',
-      message: 'http://tosh.cc.com/blog/files/2009/09/f3f0_BIRD-500x375.jpg',
-      time: '1:23'
-    };
-    let component = TestUtils.renderIntoDocument(
-      <Message
-        key={1}
-        message={spec}
-        name='grant'
-      />
-    );
-    let element = TestUtils.findRenderedDOMComponentWithClass(
-      component,
-      'message'
-    );
-    let node = ReactDOM.findDOMNode(element);
-    should(node.querySelector('img')).not.equal(null);
+      text: 'http://tosh.cc.com/blog/files/2009/09/f3f0_BIRD-500x375.jpg',
+      time: JSON.stringify(new Date())
+    }
+    let wrapper = shallow(<Message
+      key={1}
+      message={spec}
+      name='grant'
+    />)
+    expect(wrapper.find('img').props().src).toEqual(spec.text)
   })
 
-  it('should display code', () => {
-    const spec = {
-      name: 'grant',
-      message: '`var one = 1;`',
-      time: '1:23'
-    };
-    let component = TestUtils.renderIntoDocument(
-      <Message
-        key={1}
-        message={spec}
-        name='grant'
-      />
-    );
-    let element = TestUtils.findRenderedDOMComponentWithClass(
-      component,
-      'message'
-    );
-    let node = ReactDOM.findDOMNode(element);
-    should(node.querySelector('pre')).not.equal(null);
-  })
+  // it('should display code', () => {
+  //   const spec = {
+  //     name: 'grant',
+  //     text: '`var one = 1`',
+  //     time: JSON.stringify(new Date())
+  //   }
+  //   let wrapper = shallow(<Message
+  //     key={1}
+  //     message={spec}
+  //     name='grant'
+  //   />)
+  //   console.log(wrapper.props().children)
+  //   expect(wrapper.find('pre').text()).toEqual(spec.text.replace('`', ''))
+  // })
 
   it('should display remove button', () => {
     const spec = {
       name: 'grant',
-      message: '`var one = 1;`',
-      time: '1:23'
-    };
-    let component = TestUtils.renderIntoDocument(
-      <Message
-        key={1}
-        message={spec}
-        name='grant'
-      />
-    );
-    let element = TestUtils.findRenderedDOMComponentWithClass(
-      component,
-      'remove'
-    );
-    should(element).not.equal(null);
+      text: 'test',
+      time: JSON.stringify(new Date())
+    }
+    let wrapper = shallow(<Message
+      key={1}
+      message={spec}
+      name='grant'
+    />)
+    expect(wrapper.find('.remove').length).toBeGreaterThan(0)
   })
 
 })
